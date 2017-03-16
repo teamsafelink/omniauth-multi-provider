@@ -5,10 +5,10 @@ module OmniAuth
                   :callback_path_regex, :provider_path_prefix,
                   :identity_provider_options_generator
 
-      def initialize(path_prefix:,
-                     identity_provider_id_regex:,
-                     &identity_provider_options_generator)
+      def initialize(options={}, &identity_provider_options_generator)
         raise 'Missing provider options generator block' unless block_given?
+        path_prefix = options[:path_prefix]
+        identity_provider_id_regex = options[:identity_provider_id_regex]
 
         @path_prefix = path_prefix
         @identity_provider_options_generator = identity_provider_options_generator
@@ -23,9 +23,9 @@ module OmniAuth
 
       def provider_options
         {
-          request_path: method(:request_path?),
-          callback_path: method(:callback_path?),
-          setup: method(:setup)
+          :request_path => method(:request_path?),
+          :callback_path => method(:callback_path?),
+          :setup => method(:setup)
         }
       end
 
@@ -52,8 +52,8 @@ module OmniAuth
 
       def add_path_options(strategy, identity_provider_id)
         strategy.options.merge!(
-          request_path: "#{provider_path_prefix}/#{identity_provider_id}",
-          callback_path: "#{provider_path_prefix}/#{identity_provider_id}/callback"
+          :request_path => "#{provider_path_prefix}/#{identity_provider_id}",
+          :callback_path => "#{provider_path_prefix}/#{identity_provider_id}/callback"
         )
       end
 
