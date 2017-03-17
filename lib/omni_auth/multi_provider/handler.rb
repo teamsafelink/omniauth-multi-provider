@@ -16,7 +16,7 @@ module OmniAuth
 
         # Eagerly compute these since lazy evaluation will not be threadsafe
         @provider_path_prefix = @path_prefix
-        @provider_instance_path_regex = /^#{@path_prefix}\/(?<identity_provider_id>#{@identity_provider_id_regex})/
+        @provider_instance_path_regex = /^#{@path_prefix}\/(#{@identity_provider_id_regex})/
         @request_path_regex = /#{@provider_instance_path_regex}\/?$/
         @callback_path_regex = /#{@provider_instance_path_regex}\/callback\/?$/
       end
@@ -72,7 +72,7 @@ module OmniAuth
       def extract_identity_provider_id(env)
         path = current_path(env)
         match = provider_instance_path_regex.match(path)
-        match ? match[:identity_provider_id] : nil
+        match ? match[1] : nil
       end
     end
   end
