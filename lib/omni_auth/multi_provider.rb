@@ -14,6 +14,7 @@ module OmniAuth
 
       handler = OmniAuth::MultiProvider::Handler.new(:path_prefix => path_prefix,
                                                      :identity_provider_id_regex => identity_provider_id_regex,
+                                                     :provider_name => provider_name,
                                                      &dynamic_options_generator)
 
       builder.provider(provider_name, options.merge(handler.provider_options))
