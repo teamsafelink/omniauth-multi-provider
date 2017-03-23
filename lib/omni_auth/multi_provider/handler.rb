@@ -7,6 +7,7 @@ module OmniAuth
 
       def initialize(path_prefix: OmniAuth.config.path_prefix,
                      identity_provider_id_regex: /\w+/,
+                     provider_name:,
                      &provider_generator)
         raise 'Missing provider options generator block' unless block_given?
 
@@ -15,8 +16,8 @@ module OmniAuth
         @identity_provider_id_regex = identity_provider_id_regex
 
         # Eagerly compute these since lazy evaluation will not be threadsafe
-        @provider_path_prefix = @path_prefix
-        @provider_instance_path_regex = /^#{@path_prefix}\/(?<identity_provider_id>#{@identity_provider_id_regex})/
+        @provider_path_prefix = "#{@path_prefix}/#{@provider_name}"
+        @provider_instance_path_regex = /^#{@provider_path_prefix}\/(?<identity_provider_id>#{@identity_provider_id_regex})/
         @request_path_regex = /#{@provider_instance_path_regex}\/?$/
         @callback_path_regex = /#{@provider_instance_path_regex}\/callback\/?$/
       end
