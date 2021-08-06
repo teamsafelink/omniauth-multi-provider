@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'omniauth'
 
 require 'omni_auth/multi_provider/handler'
@@ -8,11 +10,10 @@ module OmniAuth
     def self.register(builder,
                       provider_name:,
                       path_prefix: ::OmniAuth.config.path_prefix,
-                      identity_provider_id_regex:,
                       **options, &dynamic_options_generator)
 
       handler = OmniAuth::MultiProvider::Handler.new(path_prefix: path_prefix,
-                                                     identity_provider_id_regex: identity_provider_id_regex,
+                                                     **options,
                                                      &dynamic_options_generator)
 
       static_options = options.merge(path_prefix: path_prefix)
