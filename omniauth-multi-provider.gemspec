@@ -17,11 +17,11 @@ Gem::Specification.new do |spec|
   spec.license       = 'MIT'
 
   # Set 'allowed_push_post' to control where this gem can be published.
-  if spec.respond_to?(:metadata)
-    spec.metadata['allowed_push_host'] = 'https://rubygems.org'
-  else
-    raise 'RubyGems 2.0 or newer is required to protect against public gem pushes.'
-  end
+  # if spec.respond_to?(:metadata)
+  #   spec.metadata['allowed_push_host'] = 'https://rubygems.org'
+  # else
+  #   raise 'RubyGems 2.0 or newer is required to protect against public gem pushes.'
+  # end
 
   spec.files         = `git ls-files -z`.split("\x0").reject { |f| f.match(%r{^(test|spec|features)/}) }
   spec.bindir        = 'bin'
@@ -31,6 +31,8 @@ Gem::Specification.new do |spec|
   spec.required_ruby_version = '>= 2.6'
 
   spec.add_dependency 'omniauth'
+  # force to install hashie 2.0.5 that supports ruby 1.8.7
+  spec.add_runtime_dependency 'hashie', '2.0.5'
 
   spec.add_development_dependency 'bundler', '~> 2.0'
   spec.add_development_dependency 'overcommit'
