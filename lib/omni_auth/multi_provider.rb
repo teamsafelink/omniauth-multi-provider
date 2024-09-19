@@ -6,11 +6,12 @@ require 'omni_auth/multi_provider/version'
 module OmniAuth
   module MultiProvider
     def self.register(builder,
+                      provider_name:,
                       path_prefix: ::OmniAuth.config.path_prefix,
                       **options, &dynamic_options_generator)
 
       handler = OmniAuth::MultiProvider::Handler.new(path_prefix: path_prefix,
-                                                     identity_provider_id_regex: identity_provider_id_regex,
+                                                     provider_name: provider_name,
                                                      **options,
                                                      &dynamic_options_generator)
 
